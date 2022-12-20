@@ -23,6 +23,7 @@ const Furniture = ({ formik }: Props) => {
           onChange={formik.handleChange}
           style={{ maxWidth: "50%" }}
           step="any"
+          required
         />
       </Form.Group>
 
@@ -39,6 +40,7 @@ const Furniture = ({ formik }: Props) => {
           onChange={formik.handleChange}
           style={{ maxWidth: "50%" }}
           step="any"
+          required
         />
       </Form.Group>
 
@@ -55,6 +57,7 @@ const Furniture = ({ formik }: Props) => {
           onChange={formik.handleChange}
           style={{ maxWidth: "50%" }}
           step="any"
+          required
         />
       </Form.Group>
       <span>Please, provide dimensions</span>

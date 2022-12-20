@@ -19,9 +19,11 @@ const Book = ({ formik }: Props) => {
           type="number"
           id="weight"
           name="weight"
+          value={formik.values.weight}
           onChange={formik.handleChange}
           style={{ maxWidth: "50%" }}
           step="any"
+          required
         />
       </Form.Group>
       <span>Please, provide weight</span>

@@ -23,6 +23,7 @@ const Dvd = ({ formik }: Props) => {
           onChange={formik.handleChange}
           style={{ maxWidth: "50%" }}
           step="any"
+          required
         />
       </Form.Group>
       <span>Please, provide size</span>

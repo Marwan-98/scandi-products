@@ -25,12 +25,18 @@ class ProductController
                     echo $this->product->deleteProducts($body->ids);
                     exit;
                 } else {
-                    $class = __NAMESPACE__ . '\\'. $body->type;
-                    $productType = new $class($this->product);
-                    $this->product->checkDuplicate($body->sku);
-                    http_response_code(201);
-                    echo $productType->setProduct($body->sku, $body->name, $body->price, $body->size ?? null, $body->weight ?? null, $body->height ?? null, $body->width ?? null, $body->length ?? null);
-                    exit;
+                    if (empty($body->sku) || empty($body->name) || empty($body->price) || empty($body->price)) {
+                        http_response_code(400);
+                        echo "Product Info are missing";
+                        exit;
+                    } else {
+                        $class = __NAMESPACE__ . '\\'. $body->type;
+                        $this->product->checkDuplicate($body->sku);
+                        $this->product->setProduct($body->sku, $body->name, $body->price);
+                        $productType = new $class($this->product);
+                        echo $productType->insert($body->size ?? null, $body->weight ?? null, $body->height ?? null, $body->width ?? null, $body->length ?? null);
+                        exit;
+                    }
                 }
         }
     }

@@ -6,6 +6,9 @@ use App\Database\Database;
 
 class Product
 {
+    protected $sku;
+    protected $name;
+    protected $price;
     protected $connection;
 
     public function __construct(Database $database)
@@ -23,11 +26,16 @@ class Product
 
         if ($result) {
             http_response_code(403);
-            echo json_encode([
-                "message" => "This SKU Already Exists"
-            ]);
+            echo "This SKU Already Exists";
             exit;
         }
+    }
+
+    public function setProduct($sku, $name, $price)
+    {
+        $this->sku = $sku;
+        $this->name = $name;
+        $this->price = $price;
     }
 
     public function getProducts()

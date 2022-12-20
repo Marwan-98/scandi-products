@@ -1,18 +1,8 @@
-import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import {
-  Navbar,
-  Container,
-  Nav,
-  Button,
-  Row,
-  Col,
-  Card,
-  Form,
-} from "react-bootstrap";
+import { Form, Alert } from "react-bootstrap";
 import Layout from "./Layout";
 import Book from "./Book";
 import Dvd from "./Dvd";
@@ -21,6 +11,8 @@ import Furniture from "./Furniture";
 type Props = {};
 
 const Add = (props: Props) => {
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -36,6 +28,7 @@ const Add = (props: Props) => {
       weight: "",
     },
     onSubmit: (values) => {
+      console.log(values);
       fetch("https://scandi-products-api.000webhostapp.com/", {
         method: "POST",
         body: JSON.stringify({
@@ -64,6 +57,8 @@ const Add = (props: Props) => {
         })
         .catch((error) => {
           console.log(error);
+          setError(error.message);
+          setTimeout(() => setError(""), 2000);
         });
     },
   });
@@ -80,6 +75,7 @@ const Add = (props: Props) => {
     <div className="App container">
       <Layout>
         <main className="p-4 text-start">
+          {error && <Alert variant="danger">{error}</Alert>}
           <Form
             className="d-flex flex-column align-items-start"
             style={{ width: "50%" }}
