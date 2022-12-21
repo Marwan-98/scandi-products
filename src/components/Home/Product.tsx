@@ -17,9 +17,8 @@ const Product = ({ product, updateDeleteProducts }: Props) => {
         className="mb-2 m-auto"
       >
         <Card.Header className="d-flex bg-white border-0">
-          <Form.Check
+          <input
             type="checkbox"
-            id={`default-checkbox`}
             className="delete-checkbox"
             onClick={() => updateDeleteProducts(product.id)}
           />
