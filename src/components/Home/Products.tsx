@@ -5,10 +5,13 @@ import { Product as ProductType } from "../../../types";
 
 type Props = {
   products: ProductType[];
-  updateDeleteProducts: (selectedId: number) => void;
+  // updateDeleteProducts: (selectedId: number) => void;
 };
 
-const Products = ({ products, updateDeleteProducts }: Props) => {
+const Products = ({
+  products,
+}: // updateDeleteProducts
+Props) => {
   return (
     <main className="p-4">
       <Row>
@@ -16,7 +19,7 @@ const Products = ({ products, updateDeleteProducts }: Props) => {
           <Product
             product={product}
             key={product.id}
-            updateDeleteProducts={updateDeleteProducts}
+            // updateDeleteProducts={updateDeleteProducts}
           />
         ))}
       </Row>

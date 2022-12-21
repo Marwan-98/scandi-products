@@ -6,7 +6,7 @@ import Products from "./components/Home/Products";
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [deleteProducts, setDeleteProducts] = useState<number[]>([]);
+  // const [deleteProducts, setDeleteProducts] = useState<number[]>([]);
 
   useEffect(() => {
     axios
@@ -17,26 +17,34 @@ function App() {
       .catch((error) => console.log(error));
   }, []);
 
-  const updateDeleteProducts = (selectedId: number) => {
-    if (!deleteProducts.includes(selectedId)) {
-      setDeleteProducts((ids) => [...ids, selectedId]);
-    } else {
-      setDeleteProducts((ids) => ids.filter((id) => selectedId !== id));
-    }
-  };
+  // const updateDeleteProducts = (selectedId: number) => {
+  //   if (!deleteProducts.includes(selectedId)) {
+  //     setDeleteProducts((ids) => [...ids, selectedId]);
+  //   } else {
+  //     setDeleteProducts((ids) => ids.filter((id) => selectedId !== id));
+  //   }
+  // };
 
   const massDelete = () => {
-    if (deleteProducts.length > 0) {
+    const checkboxes = document.getElementsByClassName("delete-checkbox");
+    let selectedProducts = [];
+
+    for (let i = 0; i < checkboxes.length; i++) {
+      if ((checkboxes[i] as HTMLInputElement).checked) {
+        selectedProducts.push(+checkboxes[i].id);
+      }
+    }
+    if (selectedProducts.length > 0) {
       axios
         .post(
           "https://scandi-products-api.000webhostapp.com/",
           JSON.stringify({
-            ids: deleteProducts,
+            ids: selectedProducts,
           })
         )
         .then((res) => {
           setProducts(() => res.data);
-          setDeleteProducts(() => []);
+          selectedProducts = [];
         })
         .catch((error) => {
           console.log(error);
@@ -49,7 +57,7 @@ function App() {
       <Layout massDelete={massDelete}>
         <Products
           products={products}
-          updateDeleteProducts={updateDeleteProducts}
+          // updateDeleteProducts={updateDeleteProducts}
         />
       </Layout>
     </div>
