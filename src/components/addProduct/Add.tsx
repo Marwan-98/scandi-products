@@ -48,8 +48,7 @@ const Add = (props: Props) => {
           return navigate("/");
         })
         .catch((error) => {
-          console.log(error);
-          setError(error.message);
+          setError(error.response.data);
           setTimeout(() => setError(""), 2000);
         });
     },
