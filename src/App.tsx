@@ -26,20 +26,22 @@ function App() {
   };
 
   const massDelete = () => {
-    axios
-      .post(
-        "https://scandi-products-api.000webhostapp.com/",
-        JSON.stringify({
-          ids: deleteProducts,
+    if (deleteProducts.length > 0) {
+      axios
+        .post(
+          "https://scandi-products-api.000webhostapp.com/",
+          JSON.stringify({
+            ids: deleteProducts,
+          })
+        )
+        .then((res) => {
+          setProducts(() => res.data);
+          setDeleteProducts(() => []);
         })
-      )
-      .then((res) => {
-        setProducts(() => res.data);
-        setDeleteProducts(() => []);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
