@@ -7,6 +7,7 @@ import Layout from "./Layout";
 import Book from "./Book";
 import Dvd from "./Dvd";
 import Furniture from "./Furniture";
+import axios from "axios";
 
 type Props = {};
 
@@ -28,31 +29,22 @@ const Add = (props: Props) => {
       weight: "",
     },
     onSubmit: (values) => {
-      console.log(values);
-      fetch("https://scandi-products-api.000webhostapp.com/", {
-        method: "POST",
-        body: JSON.stringify({
-          sku: values.sku,
-          name: values.name,
-          price: values.price,
-          height: values.height,
-          width: values.width,
-          length: values.length,
-          type: values.type,
-          size: values.size,
-          weight: values.weight,
-        }),
-      })
-        .then(function (response) {
-          if (!response.ok) {
-            return response.text().then((text) => {
-              throw new Error(text);
-            });
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
+      axios
+        .post(
+          "https://scandi-products-api.000webhostapp.com/",
+          JSON.stringify({
+            sku: values.sku,
+            name: values.name,
+            price: values.price,
+            height: values.height,
+            width: values.width,
+            length: values.length,
+            type: values.type,
+            size: values.size,
+            weight: values.weight,
+          })
+        )
+        .then(() => {
           return navigate("/");
         })
         .catch((error) => {
