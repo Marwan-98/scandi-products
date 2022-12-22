@@ -16,10 +16,11 @@ class Product
         $this->connection = $database->connect();
     }
 
-    public function checkDuplicate(string $sku)
+    public function checkDuplicate()
     {
-        $sql = 'SELECT * FROM products WHERE sku ="' . $sku . '"';
+        $sql = 'SELECT * FROM products WHERE sku = :sku';
         $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':sku', $this->sku);
         $stmt->execute();
 
         $result = $stmt->fetch();
@@ -55,8 +56,22 @@ class Product
 
     public function deleteProducts(array $ids)
     {
-        $sql = "DELETE FROM products WHERE id IN (" . implode(",", $ids) . ")";
+        $vals = "";
+
+        for ($i=0; $i < count($ids); $i++) { 
+            if ( strlen($vals) > 0 ) {
+                $vals .= ", ";
+            }
+            $vals .= '?';
+        }
+
+        $sql = "DELETE FROM products WHERE id IN ({$vals})";
         $stmt = $this->connection->prepare($sql);
+
+        for ($i=1; $i < count($ids) + 1; $i++) { 
+            $stmt->bindParam($i, $ids[$i - 1]);
+        }
+
         $stmt->execute();
         $result = $this->getProducts();
         return $result;

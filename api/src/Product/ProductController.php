@@ -31,8 +31,8 @@ class ProductController
                         exit;
                     } else {
                         $class = __NAMESPACE__ . '\\'. $body->type;
-                        $this->product->checkDuplicate($body->sku);
                         $this->product->setProduct($body->sku, $body->name, $body->price);
+                        $this->product->checkDuplicate();
                         $productType = new $class($this->product);
                         echo $productType->insert($body->size ?? null, $body->weight ?? null, $body->height ?? null, $body->width ?? null, $body->length ?? null);
                         exit;
